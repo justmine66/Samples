@@ -7,8 +7,10 @@ namespace SpanTest
     {
         static void Main(string[] args)
         {
-            BenchmarkRunner.Run<SpanVsArray_Indexer>();
-            SpanStructTypeSample.Test();
+            //BenchmarkRunner.Run<SpanVsArray_Indexer>();
+            //SpanStructTypeSample.Test();
+            SpanSumSample.Test0();
+            SpanSumSample.Test1();
 
             Console.Read();
         }
