@@ -10,12 +10,14 @@ namespace SpanTest
         static void Main(string[] args)
         {
             //BenchmarkRunner.Run<SpanVsArray_Indexer>();
+            //BenchmarkRunner.Run<SpanGenerateIdSample>();
+
             //SpanStructTypeSample.Test();
             //SpanSumSample.Test0();
             //SpanSumSample.Test1();
             //SpanGenerateIdSample.Test();
             //SpanRandomSample.Test();
-            BenchmarkRunner.Run<SpanGenerateIdSample>();
+            SpanWebSample.Test();
 
             Console.Read();
         }

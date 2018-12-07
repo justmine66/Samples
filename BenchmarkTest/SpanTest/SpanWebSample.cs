@@ -12,11 +12,16 @@ namespace SpanTest
 
         public static void Test()
         {
-            string data = "1, 2, 3, 4, 5, 6, 7";
-            StringParseSum(data); // 28
-            SpanParseSum(data); // 28
-            SpanParseSumUsingUtf8Parser(data); // 28
-            Utf8ParserWithPooling(data); // 28
+            string data = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10";
+            var result0 = StringParseSum(data);
+            var result1 = SpanParseSum(data);
+            var result2 = SpanParseSumUsingUtf8Parser(data);
+            var result3 = Utf8ParserWithPooling(data);
+
+            Console.WriteLine(result0);
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
+            Console.WriteLine(result3);
         }
 
         public static int StringParseSum(string data)
@@ -37,14 +42,14 @@ namespace SpanTest
             var sum = 0;
             while (true)
             {
-                int index = span.IndexOf(',');
+                var index = span.IndexOf(',');
                 if (index == -1)
                 {
                     sum += int.Parse(span);
                     break;
                 }
                 sum += int.Parse(span.Slice(0, index));
-                span = span.Slice(index + 1); 
+                span = span.Slice(index + 1);
             }
             return sum;
         }
@@ -56,9 +61,12 @@ namespace SpanTest
             int sum = 0;
             while (true)
             {
-                Utf8Parser.TryParse(utf8, out int value,
-                    out int bytesConsumed);
-                sum += value;
+                if (Utf8Parser.TryParse(utf8, out int value,
+                    out int bytesConsumed))
+                {
+                    sum += value;
+                }
+
                 if (utf8.Length - 1 < bytesConsumed)
                     break;
                 // skip ' , '
@@ -68,13 +76,32 @@ namespace SpanTest
             return sum;
         }
 
-        public static void Utf8ParserWithPooling(string data)
+        public static int Utf8ParserWithPooling(string data)
         {
             var minLength = _encode.GetByteCount(data);
             var array = _pool.Rent(minLength);
             Span<byte> utf8 = array;
             var bytesWritten = _encode.GetBytes(data, utf8);
             utf8 = utf8.Slice(0, bytesWritten);
+
+            var sum = 0;
+            while (true)
+            {
+                if (Utf8Parser.TryParse(utf8, out int value,
+                    out int bytesConsumed))
+                {
+                    sum += value;
+                }
+
+                if (utf8.Length - 1 < bytesConsumed)
+                    break;
+
+                utf8 = utf8.Slice(bytesConsumed + 1);
+            }
+
+            _pool.Return(array);
+
+            return sum;
         }
     }
 }
