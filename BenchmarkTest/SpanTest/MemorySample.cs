@@ -5,20 +5,34 @@ namespace SpanTest
 {
     public class MemorySample
     {
-        private static MemoryPool<byte> _pool =
+        private static MemoryPool<byte> _memPool =
         MemoryPool<byte>.Shared;
+        private static ArrayPool<byte> _arrPool = ArrayPool<byte>.Shared;
 
         public void Worker(Memory<byte> buffer)
         {
 
         }
 
-        public void UserCode()
+        public void Usage(int size)
         {
-            using (IMemoryOwner<byte> buffer = _pool.Rent(1024))
+            var array = _arrPool.Rent(size);
+            Memory<byte> buffer = array;
+            DoSomething(buffer);
+            _arrPool.Return(array);
+        }
+
+        public void UsageWithLife(int size)
+        {
+            using (var array = _memPool.Rent(size))
             {
-                Worker(buffer.Memory);
+                DoSomething(array.Memory);
             }
+        }
+
+        public void DoSomething<T>(Memory<T> memory)
+        {
+
         }
     }
 }
