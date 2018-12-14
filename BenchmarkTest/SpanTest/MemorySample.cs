@@ -1,36 +1,38 @@
 ﻿using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpanTest
 {
     public class MemorySample
     {
-        private static MemoryPool<byte> _pool = MemoryPool<byte>.Shared;
+        private static MemoryPool<byte> _memPool =
+        MemoryPool<byte>.Shared;
+        private static ArrayPool<byte> _arrPool = ArrayPool<byte>.Shared;
 
         public void Worker(Memory<byte> buffer)
         {
-            var str = new Memory<char>();
+
         }
 
-        static async Task<uint> ChecksumReadAsync(Memory<byte> buffer, Stream stream)
+        public void Usage(int size)
         {
-            var bytesRead = await stream.ReadAsync(buffer);
-            return SafeSum(buffer.Span.Slice(0, bytesRead));
+            var array = _arrPool.Rent(size);
+            Memory<byte> buffer = array;
+            DoSomething(buffer);
+            _arrPool.Return(array);
         }
 
-        static uint SafeSum(Span<byte> buffer)
+        public void UsageWithLife(int size)
         {
-            uint sum = 0;
-            foreach (var t in buffer)
+            using (var array = _memPool.Rent(size))
             {
-                sum += t;
+                DoSomething(array.Memory);
             }
+        }
 
-            return sum;
+        public void DoSomething<T>(Memory<T> memory)
+        {
+
         }
     }
 }
