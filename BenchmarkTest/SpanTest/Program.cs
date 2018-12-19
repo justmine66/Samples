@@ -20,8 +20,10 @@ namespace SpanTest
             //SpanRandomSample.Test();
             //SpanWebSample.Test();
 
-            byte[] buffer = { 1, 2, 3 };
-            await SpanAsyncCallSample.DoSomethingAsync(buffer);
+            //byte[] buffer = { 1, 2, 3 };
+            //await SpanAsyncCallSample.DoSomethingAsync(buffer);
+            //MemoryLayoutSample.Test();
+            UnSafeSample.Test();
 
             Console.Read();
         }
