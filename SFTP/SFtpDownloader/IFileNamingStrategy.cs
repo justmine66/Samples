@@ -11,7 +11,7 @@
         /// <summary>
         /// 获取文件正则命名
         /// </summary>
-        string GetReportRegexName();
+        string GetFileRegexName();
     }
 
 }

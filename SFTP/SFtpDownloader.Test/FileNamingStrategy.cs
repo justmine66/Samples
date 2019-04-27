@@ -4,7 +4,7 @@ namespace SFtpDownloader.Test
 {
 public class FileNamingStrategy : IFileNamingStrategy
 {
-    public string GetReportRegexName()
+    public string GetFileRegexName()
     {
         return $"test.csv";
     }

@@ -93,7 +93,7 @@ namespace SFtpDownloader
                         throw new InvalidOperationException($"Only these authenticate schemes[{nameof(SFtpOptions.AuthenticateScheme.Password)},{nameof(SFtpOptions.AuthenticateScheme.SecurityKey)}] supported.");
                 }
 
-                var filter = _namingStrategy.GetReportRegexName();
+                var filter = _namingStrategy.GetFileRegexName();
                 files = await sftp.ListNameAsync(opts.RemoteDirectory, new NameRegexSearchCondition(filter));
                 if (files.Length <= 0)
                 {
