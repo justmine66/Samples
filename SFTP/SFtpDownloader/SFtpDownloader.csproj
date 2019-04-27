@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>SFtp.Downloader</PackageId>
+    <Authors>justmine</Authors>
+    <Company>justmine</Company>
+    <Product>SFtp.Downloader</Product>
+    <PackageProjectUrl>https://github.com/justmine66/Samples/tree/master/SFTP/SFtpDownloader</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/justmine66/Samples/tree/master/SFTP/SFtpDownloader</RepositoryUrl>
+    <RepositoryType>net standard 2.0</RepositoryType>
+    <Version>1.0.0-preview</Version>
   </PropertyGroup>
 
   <ItemGroup>
