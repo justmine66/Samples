@@ -49,7 +49,7 @@ namespace SFtpDownloader
             return null;
         }
 
-        public async Task<string[]> DoDownloadAsync(int siteId, SFtpOptions options)
+        private async Task<string[]> DoDownloadAsync(int siteId, SFtpOptions options)
         {
             var opts = _options.Value ?? options;
             if (!opts.IsValid())
