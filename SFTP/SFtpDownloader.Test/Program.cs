@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace SFtpDownloader.Test
 {
@@ -8,7 +8,7 @@ namespace SFtpDownloader.Test
     {
         static async Task Main(string[] args)
         {
-            var host = new HostBuilder()
+            await new HostBuilder()
                 .ConfigureServices(services => services.AddSFtpServices(builder =>
                 {
                     builder.AddNamingStrategy<FileNamingStrategy>();
@@ -21,9 +21,7 @@ namespace SFtpDownloader.Test
                 {
                     builder.AddConsole();
                 })
-                .Build();
-
-            await host.RunConsoleAsync();
+                .RunConsoleAsync();
         }
     }
 }
