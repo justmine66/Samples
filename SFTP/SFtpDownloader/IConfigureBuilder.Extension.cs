@@ -4,9 +4,9 @@ using Microsoft.Extensions.Options;
 namespace SFtpDownloader
 {
     /// <summary>
-    /// Extension methods for setting up mda services in an <see cref="IMdaBuilder" />.
+    /// Extension methods for setting up mda services in an <see cref="IConfigureBuilder" />.
     /// </summary>
-    public static class IConfigureBuilderExtension
+    public static class ConfigureBuilderExtension
     {
         /// <summary>
         /// 使用密码认证方案
@@ -45,13 +45,13 @@ namespace SFtpDownloader
         /// <summary>
         /// 注册命名策略服务。
         /// </summary>
-        /// <typeparam name="FileNamingStrategyServie">命名策略服务</typeparam>
+        /// <typeparam name="TFileNamingStrategyService">命名策略服务</typeparam>
         /// <param name="builder">配置器</param>
         /// <returns>配置器</returns>
-        public static IConfigureBuilder AddNamingStrategy<FileNamingStrategyServie>(this IConfigureBuilder builder)
-            where FileNamingStrategyServie : class, IFileNamingStrategy
+        public static IConfigureBuilder AddNamingStrategy<TFileNamingStrategyService>(this IConfigureBuilder builder)
+            where TFileNamingStrategyService : class, IFileNamingStrategy
         {
-            builder.Services.AddSingleton<IFileNamingStrategy, FileNamingStrategyServie>();
+            builder.Services.AddSingleton<IFileNamingStrategy, TFileNamingStrategyService>();
 
             return builder;
         }
