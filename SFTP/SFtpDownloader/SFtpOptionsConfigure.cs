@@ -22,7 +22,7 @@ namespace SFtpDownloader
                 if (!string.IsNullOrEmpty(embeddedPrivateKeyFullName))
                 {
                     options.PrivateKey = PrivateKey.Get(embeddedPrivateKeyFullName);
-                    options.AuthScheme = SFtpOptions.AuthenticateScheme.Password;
+                    options.AuthScheme = SFtpOptions.AuthenticateScheme.SecurityKey;
                 }
             })
         {
