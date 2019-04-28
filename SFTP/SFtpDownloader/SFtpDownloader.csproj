@@ -17,6 +17,7 @@
     <PackageReference Include="ComponentPro.Sftp" Version="7.0.226.143" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+    <PackageReference Include="Polly" Version="7.1.0" />
   </ItemGroup>
 
 </Project>

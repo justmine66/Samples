@@ -34,7 +34,22 @@ namespace SFtpDownloader
             _options = options;
         }
 
-        public async Task<string[]> DownloadAsync(int siteId, SFtpOptions options)
+        public async Task<string[]> DownloadAsync(int siteId, SFtpOptions options = null)
+        {
+            var policy = PolicyFactory.CreateRetry(5, (e) =>
+            {
+                _logger.LogError($"Retrying, ex: {e}.");
+            });
+
+            var files = await policy.Execute(async () => await DoDownloadAsync(siteId, options));
+            if (files?.Length > 0)
+                return files;
+
+            _logger.LogWarning($"No files found from sftp server.");
+            return null;
+        }
+
+        public async Task<string[]> DoDownloadAsync(int siteId, SFtpOptions options)
         {
             var opts = _options.Value ?? options;
             if (!opts.IsValid())
