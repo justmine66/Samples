@@ -13,10 +13,17 @@ namespace SFtpDownloader
                 options.LocalDirectory = localDirectory;
 
                 if (!string.IsNullOrEmpty(password))
+                {
                     options.Password = password;
+                    options.AuthScheme = SFtpOptions.AuthenticateScheme.Password;
+                }
+
 
                 if (!string.IsNullOrEmpty(embeddedPrivateKeyFullName))
+                {
                     options.PrivateKey = PrivateKey.Get(embeddedPrivateKeyFullName);
+                    options.AuthScheme = SFtpOptions.AuthenticateScheme.Password;
+                }
             })
         {
         }
