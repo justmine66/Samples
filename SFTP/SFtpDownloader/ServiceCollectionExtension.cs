@@ -19,7 +19,7 @@ namespace SFtpDownloader
 
             container.AddSingleton(typeof(IDataCache<>), typeof(DataCacheImpl<>));
             container.AddSingleton<IFilesManager, FilesManagerImpl>();
-            container.AddSingleton<IFilesManager, FilesManagerImpl>();
+            container.AddSingleton<IFilesDownloader, SFTPFilesDownloader>();
 
             configure(new ConfigureBuilder(container));
 
