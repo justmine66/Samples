@@ -48,9 +48,9 @@ namespace SFtpDownloader
                 return null;
             }
 
-            if (Interlocked.CompareExchange(ref _isDownloading, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref _isDownloading, 1, 0) != 0)
             {
-                _logger.LogWarning($"{nameof(SFTPFilesDownloader)} is Downloading, please try again later.");
+                _logger.LogWarning($"{nameof(SFTPFilesDownloader)} is downloading, please try again later.");
                 return null;
             }
 
