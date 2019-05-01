@@ -8,7 +8,7 @@ namespace SFtpDownloader
     {
         private readonly IDataCache<string[]> _cache;
 
-        private static string CacheKeyFormat = "source.reports.{0}";
+        private static string CacheKeyFormat = "source.files.{0}";
 
         public FilesManagerImpl(IDataCache<string[]> cache)
         {
