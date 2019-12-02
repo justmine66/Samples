@@ -85,22 +85,27 @@ namespace Emit.Samples
             ctorIl.Emit(OpCodes.Ret);
 
             // 5. 编写方法
+            // 5.1 GetPasswordHash 
             var getPasswordHashMethodBuilder = typeBuilder.DefineMethod("GetPasswordHash", MethodAttributes.Public | MethodAttributes.HideBySig, CallingConventions.HasThis, typeof(string), Type.EmptyTypes);
             var getPasswordHashIl = getPasswordHashMethodBuilder.GetILGenerator();
-            //将this压入栈中
+            // 将this压入栈中
             getPasswordHashIl.Emit(OpCodes.Ldarg_0);
-            //将字段值压入到栈中
+            // 将字段值压入到栈中
             getPasswordHashIl.Emit(OpCodes.Ldfld, passwordHashBuilder);
-            //返回
+            // 返回
             getPasswordHashIl.Emit(OpCodes.Ret);
-
+            // 5.2 SetPasswordHash(string password)
             var setPasswordHashMethodBuilder = typeBuilder.DefineMethod("SetPasswordHash",
                 MethodAttributes.Public | MethodAttributes.HideBySig, CallingConventions.HasThis, null,
                 new[] { typeof(string) });
             var setPasswordHashIl = setPasswordHashMethodBuilder.GetILGenerator();
+            // 将this压入栈中
             setPasswordHashIl.Emit(OpCodes.Ldarg_0);
+            // 将参数值压入到栈中
             setPasswordHashIl.Emit(OpCodes.Ldarg_1);
+            // 从栈中取出参数值，并赋值给字段
             setPasswordHashIl.Emit(OpCodes.Stfld, passwordHashBuilder);
+            // 返回
             setPasswordHashIl.Emit(OpCodes.Ret);
 
             // 6. 创建对象

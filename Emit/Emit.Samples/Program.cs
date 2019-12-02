@@ -7,6 +7,8 @@ namespace Emit.Samples
         static void Main(string[] args)
         {
             FieldSample.Run();
+            Console.WriteLine("-------------");
+            PropertySample.Run();
 
             Console.Read();
         }
