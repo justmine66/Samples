@@ -34,6 +34,16 @@ namespace Emit.Samples
 
         public static void Run()
         {
+            var user = CreateInstance();
+
+            // 7. 调用方法查看结果
+            Console.WriteLine("初始值: "+user.GetPasswordHash());
+            user.SetPasswordHash("刚刚设置的密码");
+            Console.WriteLine("赋值: " + user.GetPasswordHash());
+        }
+
+        private static dynamic CreateInstance()
+        {
             // 1. 创建类
             var name = "Emit.Samples.Filed";
             var asmBuilder = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(name), AssemblyBuilderAccess.Run);
@@ -84,24 +94,20 @@ namespace Emit.Samples
             //返回
             getPasswordHashIl.Emit(OpCodes.Ret);
 
-            //var setPasswordHashMethodBuilder = typeBuilder.DefineMethod("SetPasswordHash",
-            //    MethodAttributes.Public | MethodAttributes.HideBySig, CallingConventions.HasThis, null,
-            //    new[] {typeof(string)});
-            //var setPasswordHashIl = setPasswordHashMethodBuilder.GetILGenerator();
-            //setPasswordHashIl.Emit(OpCodes.Ldarg_0);
-            //setPasswordHashIl.Emit(OpCodes.Ldstr, "这是静态赋值");
-            //setPasswordHashIl.Emit(OpCodes.Ldarg_1);
-            //setPasswordHashIl.Emit(OpCodes.Ldfld, passwordHashBuilder);
-            //setPasswordHashIl.Emit(OpCodes.Ret);
+            var setPasswordHashMethodBuilder = typeBuilder.DefineMethod("SetPasswordHash",
+                MethodAttributes.Public | MethodAttributes.HideBySig, CallingConventions.HasThis, null,
+                new[] { typeof(string) });
+            var setPasswordHashIl = setPasswordHashMethodBuilder.GetILGenerator();
+            setPasswordHashIl.Emit(OpCodes.Ldarg_0);
+            setPasswordHashIl.Emit(OpCodes.Ldarg_1);
+            setPasswordHashIl.Emit(OpCodes.Stfld, passwordHashBuilder);
+            setPasswordHashIl.Emit(OpCodes.Ret);
 
             // 6. 创建对象
             var type = typeBuilder.CreateType();
             dynamic user = Activator.CreateInstance(type);
 
-            // 7. 调用方法查看结果
-            Console.WriteLine("初始值: "+user.GetPasswordHash());
-            user.SetPasswordHash();
-            Console.WriteLine("赋值: " + user.GetPasswordHash());
+            return user;
         }
     }
 }
