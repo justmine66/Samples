@@ -1,4 +1,5 @@
 ﻿using System;
+using Emit.Samples.Aop.Test;
 
 namespace Emit.Samples
 {
@@ -6,9 +7,17 @@ namespace Emit.Samples
     {
         static void Main(string[] args)
         {
-            FieldSample.Run();
+            //FieldSample.Run();
+            //Console.WriteLine("-------------");
+            //PropertySample.Run();
+            //Console.WriteLine("-------------");
+
+            //AddSample.Run();
+            EmitDynamicProxyTest.FaultTolerantOfRealize();
             Console.WriteLine("-------------");
-            PropertySample.Run();
+            EmitDynamicProxyTest.FaultTolerantOfInherit();
+            Console.WriteLine("-------------");
+            EmitDynamicProxyTest.Performance1();
 
             Console.Read();
         }
